@@ -76,6 +76,9 @@ cpdefine("inline:com-chilipeppr-workspace-tinyg", ["chilipeppr_ready"], function
             // Most workspaces will instantiate the Serial Port Console widget
             this.loadConsoleWidget();
             
+            /////////////////call my widget
+            this.loadLuaEditorWidget();
+            
             // This is a huge method that was built from the original jsfiddle workspace
             // we should technically put each widget in its own method for loading
             this.loadWidgets();
@@ -280,6 +283,24 @@ cpdefine("inline:com-chilipeppr-workspace-tinyg", ["chilipeppr_ready"], function
                         //chilipeppr.subscribe("/" + this.id + "/didDrop", this, this.show);
                         console.log("done instantiating " + this.name + " add-on widget");
                     },
+                    // add widget for tool change
+                     chilipeppr.load(
+  "#mytoolchangeeditor",
+  "http://raw.githubusercontent.com/chilipeppr/widget-luaeditor/master/auto-generated-widget.html",
+  function() {
+    // Callback after widget loaded into #mytoolchangeeditor
+    // Now use require.js to get reference to instantiated widget
+    cprequire(
+      ["inline:com-chilipeppr-widget-luaeditor"], // the id you gave your widget
+      function(myObjWidgetLuaeditor) {
+        // Callback that is passed reference to the newly loaded widget
+        console.log("Widget / Lua Editor just got loaded.", myObjWidgetLuaeditor);
+        myObjWidgetLuaeditor.init();
+      }
+    );
+  }
+);
+                    
                     load: function(callback) {
                         var that = this;
                         chilipeppr.load(
